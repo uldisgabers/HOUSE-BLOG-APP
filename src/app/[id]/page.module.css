@@ -1,0 +1,8 @@
+.img {
+  max-width: 700px;
+}
+
+.commentWrapper {
+  border: solid 1px gray;
+  padding: 1rem;
+}
