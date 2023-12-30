@@ -1,8 +1,9 @@
-import { Post } from "../page";
+import { Post, Tag } from "../types";
 import style from "./page.module.css";
-import { Comment } from "../api/comments/[id]/route";
+import { Comment } from "../types";
 import CommentForm from "../components/CommentForm/CommentForm";
 import { formatDistance, parseISO } from "date-fns";
+import Link from "next/link";
 
 async function getPost(id: number) {
   const res = await fetch("http://localhost:3000/api/posts/" + id, {
@@ -51,6 +52,11 @@ export default async function PostDetails({
         <img className={style.img} src={post.img} alt="blog title photo" />
         <h3>{post.title}</h3>
         <p>{post.content}</p>
+        <Link href={`/tag/${post.tag_id}`}>See more post like this</Link>
+      </div>
+      <div>
+        <h2>Add new Comment</h2>
+        <CommentForm post_id={post.post_id} />
       </div>
       <div>
         {apiComments.map((comment) => {
@@ -67,10 +73,6 @@ export default async function PostDetails({
             </div>
           );
         })}
-      </div>
-      <div>
-        <h2>Add new Comment</h2>
-        <CommentForm post_id={post.post_id} />
       </div>
     </main>
   );

@@ -1,0 +1,17 @@
+.blogSection {
+  border: 1px solid gray;
+  padding: 1rem;
+
+}
+
+.title {
+  /* text-decoration: none; */
+  color: black;
+  font-size: 36px;
+  font-weight: bold;
+
+}
+
+.image {
+  max-width: 500px;
+}

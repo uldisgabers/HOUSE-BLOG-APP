@@ -3,14 +3,9 @@ import { NextResponse, NextRequest } from "next/server";
 import { connectionToDB } from "../../../../db";
 import { error, log } from "console";
 import mysql from "mysql2/promise";
+import { Comment } from "@/app/types";
 
-export type Comment = {
-  comment_id: number;
-  author: string;
-  comment: string;
-  createdAt: string;
-  post_id: number;
-};
+
 
 export async function GET(
   request: Request,

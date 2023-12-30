@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { Comment } from "@/app/api/comments/[id]/route";
+// import { Comment } from "@/app/api/comments/[id]/route";
 
 type CommentsPropType = {
   post_id: number;

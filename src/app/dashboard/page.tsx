@@ -1,12 +1,10 @@
-// "use client"
-import style from "./page.module.css";
-import axios from "axios";
-import { ReactNode } from "react";
-import { formatDistance, parseISO } from "date-fns";
-import Image from "next/image";
-import Link from "next/link";
-import { Tag, Post } from "./types";
-
+import { getServerSession } from 'next-auth'
+import { redirect } from 'next/navigation'
+import React from 'react'
+import { Post, Tag } from '../types';
+import Link from 'next/link';
+import { formatDistance, parseISO } from 'date-fns';
+import style from "./page.module.css"
 
 async function getPosts() {
   const res = await fetch("http://localhost:3000/api/posts", {
@@ -41,15 +39,20 @@ async function getTags() {
   return res.json();
 }
 
-export default async function Home() {
+
+async function DashboardHome() {
+  const session = await getServerSession()
+  if (!session || !session.user) {
+    redirect("/api/auth/signin")
+  }
+
 
   const posts = await getPosts();
 
   const tags = await getTags();
 
   return (
-    <main>
-      <div>
+    <div>
         {posts.map((post: Post) => (
           <div key={post.post_id} className={style.blogSection}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -62,14 +65,10 @@ export default async function Home() {
                 addSuffix: true,
               })}
             </div>
-            <div>{tags.map((tag: Tag) => {
-              if (tag.tag_id === post.tag_id) {
-                return <Link key={tag.tag_id} href={`/tag/${tag.tag_id}`}>{tag.tag_name}</Link>
-              }
-            })}</div>
           </div>
         ))}
       </div>
-    </main>
-  );
+  )
 }
+
+export default DashboardHome
