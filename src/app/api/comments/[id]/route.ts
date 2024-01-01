@@ -36,31 +36,34 @@ export async function GET(
   }
 }
 
-// export async function POST(
-//   request: Request,
-//   { params }: { params: { id: number } }
-// ) {
-//   try {
-//     const connection = await mysql.createConnection(connectionToDB);
+export async function DELETE(
+  request: Request,
+  { params }: { params: { id: number } }
+) {
+  try {
+    const connection = await mysql.createConnection(connectionToDB);
 
-//     let get_exp_query = "";
-//     get_exp_query = `SELECT * FROM comments WHERE post_id = ${params.id}`;
+    let get_exp_query = "";
+    get_exp_query = `
+      DELETE FROM comments 
+      WHERE comment_id='${params.id}'
+    `;
 
-//     let values: Comment[] = [];
+    let values: Comment[] = [];
 
-//     const [results] = await connection.execute(get_exp_query, values);
+    const [results] = await connection.execute(get_exp_query, values);
 
-//     connection.end();
+    connection.end();
 
-//     return NextResponse.json(results);
-//   } catch (err) {
-//     console.log("ERROR: API - ", (err as Error).message);
+    return NextResponse.json(results);
+  } catch (err) {
+    console.log("ERROR: API - ", (err as Error).message);
 
-//     const response = {
-//       error: (err as Error).message,
-//       returnedStatus: 200,
-//     };
+    const response = {
+      error: (err as Error).message,
+      returnedStatus: 200,
+    };
 
-//     return NextResponse.json(response, { status: 200 });
-//   }
-// }
+    return NextResponse.json(response, { status: 200 });
+  }
+}

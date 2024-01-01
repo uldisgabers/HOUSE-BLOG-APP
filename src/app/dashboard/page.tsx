@@ -57,7 +57,7 @@ async function DashboardHome() {
           <div key={post.post_id} className={style.blogSection}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img className={style.image} src={post.img} alt="blog-post-pic" />
-            <Link className={style.title} href={`/${post.post_id}`}>{post.title}</Link>
+            <Link className={style.title} href={`/dashboard/${post.post_id}`}>{post.title}</Link>
             <p>{post.content}</p>
             <div className="card__timestamp">
               created{" "}

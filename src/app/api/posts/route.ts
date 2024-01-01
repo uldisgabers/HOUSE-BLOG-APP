@@ -75,3 +75,72 @@ export async function POST(request: Request) {
     return NextResponse.json(response, { status: 200 });
   }
 }
+
+export async function DELETE(request: Request) {
+  try {
+    const connection = await mysql.createConnection(connectionToDB);
+
+    const body = await request.json();
+
+    let deleteCommentsQuery = `
+      DELETE FROM comments 
+      WHERE post_id='${body}';
+    `;
+
+    let deletePostQuery = `
+      DELETE FROM posts 
+      WHERE post_id='${body}';
+    `;
+
+    let values: Post[] = [];
+
+   const [commentsResults] = await connection.execute(deleteCommentsQuery, values);
+
+   const [postResults] = await connection.execute(deletePostQuery, values);
+
+
+    connection.end();
+
+    return NextResponse.json({ commentsResults, postResults });
+  } catch (err) {
+    console.log("ERROR: API - ", (err as Error).message);
+
+    const response = {
+      error: (err as Error).message,
+      returnedStatus: 200,
+    };
+
+    return NextResponse.json(response, { status: 200 });
+  }
+}
+
+export async function UPDATE(request: Request) {
+  try {
+    const connection = await mysql.createConnection(connectionToDB);
+
+    const body = await request.json();
+
+    let get_exp_query = "";
+    get_exp_query = `
+      INSERT INTO posts (title, img, content, createdAt, tag_id) 
+      VALUES ('${body.title}', '${body.img}', '${body.content}', '${body.createdAt}', '${body.tag_id}')
+    `;
+
+    let values: Post[] = [];
+
+    const [results] = await connection.execute(get_exp_query, values);
+
+    connection.end();
+
+    return NextResponse.json(results);
+  } catch (err) {
+    console.log("ERROR: API - ", (err as Error).message);
+
+    const response = {
+      error: (err as Error).message,
+      returnedStatus: 200,
+    };
+
+    return NextResponse.json(response, { status: 200 });
+  }
+}

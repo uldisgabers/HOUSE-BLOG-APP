@@ -70,6 +70,7 @@ export default function NewPostForm() {
       <form className={style.formWrapper} onSubmit={handleSubmit}>
         <label htmlFor="title">Title</label>
         <input
+          required
           id="title"
           type="text"
           placeholder="Blog title"
@@ -84,6 +85,7 @@ export default function NewPostForm() {
 
         <label htmlFor="img">Image URL</label>
         <input
+          required
           id="img"
           type="text"
           placeholder="Blog image URL"
@@ -98,6 +100,7 @@ export default function NewPostForm() {
 
         <label htmlFor="description">Description</label>
         <input
+          required
           id="description"
           type="text"
           placeholder="Blog content..."
@@ -121,6 +124,7 @@ export default function NewPostForm() {
             });
           }}
         >
+          <option hidden>Select tag...</option>
           {tags.map((tag: Tag) => {
             return (
               <option key={tag.tag_id} value={tag.tag_id}>
