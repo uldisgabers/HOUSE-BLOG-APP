@@ -51,23 +51,67 @@ async function DashboardHome() {
 
   const tags = await getTags();
 
+  if (!posts) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <div>
+    // <div>
+    //     {posts.map((post: Post) => (
+    //       <div key={post.post_id} className={style.blogSection}>
+    //         {/* eslint-disable-next-line @next/next/no-img-element */}
+    //         <img className={style.image} src={post.img} alt="blog-post-pic" />
+    //         <Link className={style.title} href={`/dashboard/${post.post_id}`}>{post.title}</Link>
+    //         <p>{post.content}</p>
+    //         <div className="card__timestamp">
+    //           created{" "}
+    //           {formatDistance(parseISO(post.createdAt), new Date(), {
+    //             addSuffix: true,
+    //           })}
+    //         </div>
+    //       </div>
+    //     ))}
+    //   </div>
+
+    <main className={style.main}>
+      <div className={style.sectionWrapper}>
         {posts.map((post: Post) => (
           <div key={post.post_id} className={style.blogSection}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img className={style.image} src={post.img} alt="blog-post-pic" />
-            <Link className={style.title} href={`/dashboard/${post.post_id}`}>{post.title}</Link>
-            <p>{post.content}</p>
-            <div className="card__timestamp">
-              created{" "}
-              {formatDistance(parseISO(post.createdAt), new Date(), {
-                addSuffix: true,
-              })}
+            <div className={style.pictureWrapper}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img className={style.image} src={post.img} alt="blog-post-pic" />
+            </div>
+            <Link className={style.title} href={`/dashboard/${post.post_id}`}>
+              {post.title}
+            </Link>
+            <div dangerouslySetInnerHTML={{__html: post.content}}></div>
+            <div className={style.postInfoDetails}>
+              <div>
+                {tags.map((tag: Tag) => {
+                  if (tag.tag_id === post.tag_id) {
+                    return (
+                      <Link
+                        key={tag.tag_id}
+                        href={`/tag/${tag.tag_id}`}
+                        className={style.tag}
+                      >
+                        {tag.tag_name}
+                      </Link>
+                    );
+                  }
+                })}
+              </div>
+              <div className="card__timestamp">
+                created{" "}
+                {formatDistance(parseISO(post.createdAt), new Date(), {
+                  addSuffix: true,
+                })}
+              </div>
             </div>
           </div>
         ))}
       </div>
+    </main>
   )
 }
 

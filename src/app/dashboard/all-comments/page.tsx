@@ -30,22 +30,23 @@ export default async function AllComments() {
   const comments = await getAllComments();
 
   return (
-    <>
+    <main className={style.main}>
       {comments.map((comment: Comment) => (
         <div className={style.commentWrapper} key={comment.comment_id}>
-          <h2>{comment.author}</h2>
+          <h2 className={style.commentAuthor}>{comment.author}</h2>
           <p>{comment.comment}</p>
-          <div>
+          <div className={style.createdAt}>
             created{" "}
             {formatDistance(parseISO(comment.createdAt), new Date(), {
               addSuffix: true,
             })}
           </div>
-          <Link href={`/${comment.post_id}`}>Source post</Link>
-          <br />
+          <Link href={`/dashboard/${comment.post_id}`}>Source post</Link>
+            <br />
+            <br />
           <DeleteComment comment_id={comment.comment_id}/>
         </div>
       ))}
-    </>
+    </main>
   );
 }

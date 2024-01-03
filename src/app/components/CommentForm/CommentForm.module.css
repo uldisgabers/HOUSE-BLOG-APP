@@ -1,0 +1,39 @@
+.formWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: left;
+}
+
+.author {
+  width: 100%;
+  border: 3px solid #C2B7B1;
+  padding: 8px;
+  border-radius: 1rem;
+}
+
+.comment {
+  width: 100%;
+  border: 3px solid #C2B7B1;
+  padding: 8px;
+  border-radius: 1rem;
+}
+
+.sendButton {
+  border: 3px solid #6e615a;
+  padding: 8px;
+  border-radius: 1rem;
+  max-width: 200px;
+  width: 100%;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #6e615a;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.sendButton:hover {
+  background-color: #473b34;
+  border: 3px solid #473b34;
+  color: wheat;
+}

@@ -18,12 +18,10 @@ export async function POST(request: Request) {
 
     const body = await request.json();
 
-    console.log(body);
-
     let get_exp_query = "";
     get_exp_query = `
       INSERT INTO comments (author, comment, createdAt, post_id) 
-      VALUES ('${body.author}', '${body.comment}', '${body.createdAt}', '${body.post_id}')
+      VALUES ("${body.author}", "${body.comment}", "${body.createdAt}", "${body.post_id}")
     `;
 
     let values: Comment[] = [];

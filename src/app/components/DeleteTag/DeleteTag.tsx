@@ -10,7 +10,7 @@ function DeleteTag() {
   
   const [tags, setTags] = useState([]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     async function fetchTags() {
       try {
         const res = await fetch("http://localhost:3000/api/tags", {
@@ -31,6 +31,7 @@ function DeleteTag() {
     }
 
     fetchTags();
+
   }, []);
 
   const [deleteTag, setDeleteTag] = useState('')
@@ -44,11 +45,15 @@ function DeleteTag() {
 
     if (res.status === 200 || res.status === 201) {
       router.refresh();
-    } else {
-      return ( <p>Tag in use</p>)
     }
 
     setDeleteTag("")
+  }
+
+  if (tags.length === 0) {
+    return (
+      <h3>Loading...</h3>
+    )
   }
 
   return (

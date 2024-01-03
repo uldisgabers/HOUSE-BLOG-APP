@@ -1,9 +1,17 @@
 "use client";
 
 import { Post, Tag } from "@/app/types";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Component } from "react";
 import style from "./NewPostForm.module.css";
 import { useRouter } from "next/navigation";
+import { Editor } from "react-draft-wysiwyg";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import '/node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import { EditorState, convertToRaw } from 'draft-js';
+import { convertToHTML } from 'draft-convert';
+import draftToHtml from 'draftjs-to-html';
+import htmlToDraft from 'html-to-draftjs';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 export default function NewPostForm() {
   const router = useRouter();
@@ -63,10 +71,39 @@ export default function NewPostForm() {
       createdAt: new Date(),
       tag_id: "",
     });
+
+    setEditorState(() => EditorState.createEmpty())
   };
 
+  // Wisiwyg setup --------------------------------------------------------
+
+  const [editorState, setEditorState] = useState(
+    () => EditorState.createEmpty(),
+  );
+  const [convertedContent, setConvertedContent] = useState('');
+
+  useEffect(() => {
+    let html = draftToHtml(convertToRaw(editorState.getCurrentContent()));
+    setConvertedContent(html);
+  }, [editorState]);
+
+  const onEditorStateChange = (editorState: EditorState) => {
+    // setNewPost({...newPost, content: draftToHtml(convertToRaw(editorState.getCurrentContent()))})
+    setEditorState(editorState)
+    setNewPost({...newPost, content: draftToHtml(convertToRaw(editorState.getCurrentContent()))})
+  }
+
+
+  // ----------------------------------------------------------------------
+
+  if (tags.length === 0) {
+    return (
+      <h1>Loading...</h1>
+    )
+  }
+
   return (
-    <div>
+    <div className={style.addPostPage}>
       <form className={style.formWrapper} onSubmit={handleSubmit}>
         <label htmlFor="title">Title</label>
         <input
@@ -99,7 +136,17 @@ export default function NewPostForm() {
         />
 
         <label htmlFor="description">Description</label>
-        <input
+
+        <Editor
+          editorState={editorState}
+          onEditorStateChange={onEditorStateChange}
+          wrapperClassName={style.wrapperClass}
+          editorClassName={style.editorClass}
+          toolbarClassName={style.toolbarClass}
+
+        />
+
+        {/* <input
           required
           id="description"
           type="text"
@@ -111,7 +158,7 @@ export default function NewPostForm() {
               content: e.target.value,
             });
           }}
-        />
+        /> */}
 
         <label htmlFor="tag">Tag</label>
         <select
@@ -139,3 +186,8 @@ export default function NewPostForm() {
     </div>
   );
 }
+
+// function convertToHTML(arg0: Draft.Model.ImmutableData.ContentState) {
+//   throw new Error("Function not implemented.");
+// }
+

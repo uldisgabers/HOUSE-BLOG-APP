@@ -6,6 +6,7 @@ import style from "./PostInfo.module.css";
 import { Post, Tag } from "@/app/types";
 import DeletePost from "../DeletePost/DeletePost";
 import { useRouter } from "next/navigation";
+import { formatDistance, parseISO } from "date-fns";
 
 type PostPropType = {
   post: Post;
@@ -45,7 +46,7 @@ function PostInfo({ post }: PostPropType) {
 
   const handleEditSave = async () => {
     const res = await fetch("http://localhost:3000/api/posts", {
-      method: "UPDATE",
+      method: "PUT",
       headers: { "Content-Type": "aplication/json" },
       body: JSON.stringify(editedPost),
     });
@@ -54,18 +55,25 @@ function PostInfo({ post }: PostPropType) {
       router.refresh();
     }
 
-    setEditMode(false)
-  }
+    setEditMode(false);
+  };
 
   return (
-    <main>
+    <main className={style.main}>
       {editMode === false ? (
-        <div>
+        <div className={style.sectionWrapper}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img className={style.img} src={post.img} alt="blog title photo" />
-          <h3>{post.title}</h3>
-          <p>{post.content}</p>
-          <Link href={`/tag/${post.tag_id}`}>See more post like this</Link>
+          <h3 className={style.title}>{post.title}</h3>
+          <div className={style.paragraph} dangerouslySetInnerHTML={{__html: post.content}}></div>
+          {/* <p className={style.paragraph}>{post.content}</p> */}
+          <Link className={style.tag} href={`/tag/${post.tag_id}`}>See more post like this</Link>
+          <div>
+            created{" "}
+            {formatDistance(parseISO(post.createdAt), new Date(), {
+              addSuffix: true,
+            })}
+          </div>
         </div>
       ) : (
         <form className={style.editForm} onSubmit={handleEditSave}>
@@ -74,7 +82,7 @@ function PostInfo({ post }: PostPropType) {
             type="text"
             value={editedPost.title}
             onChange={(e) => {
-              setEditedPost({ ...post, title: e.target.value });
+              setEditedPost({ ...editedPost, title: e.target.value });
             }}
           />
           <label htmlFor="">IMAGE URL</label>
@@ -82,7 +90,7 @@ function PostInfo({ post }: PostPropType) {
             type="text"
             value={editedPost.img}
             onChange={(e) => {
-              setEditedPost({ ...post, img: e.target.value });
+              setEditedPost({ ...editedPost, img: e.target.value });
             }}
           />
           <label htmlFor="">CONTENT</label>
@@ -90,7 +98,7 @@ function PostInfo({ post }: PostPropType) {
             type="text"
             value={editedPost.content}
             onChange={(e) => {
-              setEditedPost({ ...post, content: e.target.value });
+              setEditedPost({ ...editedPost, content: e.target.value });
             }}
           />
 
@@ -99,7 +107,7 @@ function PostInfo({ post }: PostPropType) {
             id="tag"
             value={editedPost.tag_id}
             onChange={(e) => {
-              setEditedPost({ ...post, tag_id: Number(e.target.value) });
+              setEditedPost({ ...editedPost, tag_id: Number(e.target.value) });
             }}
           >
             <option hidden>Select tag...</option>

@@ -19,8 +19,8 @@ function DeletePost({ post_id }: CommentsPropType) {
     });
 
     if (res.status === 200 || res.status === 201) {
-      router.refresh()
       router.push('/dashboard')
+      router.refresh()
     }
   };
 

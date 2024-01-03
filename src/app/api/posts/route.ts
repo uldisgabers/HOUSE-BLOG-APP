@@ -51,13 +51,18 @@ export async function POST(request: Request) {
 
     const body = await request.json();
 
-    let get_exp_query = "";
-    get_exp_query = `
+    const get_exp_query = `
       INSERT INTO posts (title, img, content, createdAt, tag_id) 
-      VALUES ('${body.title}', '${body.img}', '${body.content}', '${body.createdAt}', '${body.tag_id}')
+      VALUES (?, ?, ?, ?, ?)
     `;
 
-    let values: Post[] = [];
+    const values = [
+      body.title,
+      body.img,
+      body.content,
+      body.createdAt,
+      body.tag_id,
+    ];
 
     const [results] = await connection.execute(get_exp_query, values);
 
@@ -94,10 +99,12 @@ export async function DELETE(request: Request) {
 
     let values: Post[] = [];
 
-   const [commentsResults] = await connection.execute(deleteCommentsQuery, values);
+    const [commentsResults] = await connection.execute(
+      deleteCommentsQuery,
+      values
+    );
 
-   const [postResults] = await connection.execute(deletePostQuery, values);
-
+    const [postResults] = await connection.execute(deletePostQuery, values);
 
     connection.end();
 
@@ -114,7 +121,7 @@ export async function DELETE(request: Request) {
   }
 }
 
-export async function UPDATE(request: Request) {
+export async function PUT(request: Request) {
   try {
     const connection = await mysql.createConnection(connectionToDB);
 
@@ -122,8 +129,9 @@ export async function UPDATE(request: Request) {
 
     let get_exp_query = "";
     get_exp_query = `
-      INSERT INTO posts (title, img, content, createdAt, tag_id) 
-      VALUES ('${body.title}', '${body.img}', '${body.content}', '${body.createdAt}', '${body.tag_id}')
+      UPDATE posts
+      SET title = '${body.title}', img = '${body.img}', content = '${body.content}', tag_id = '${body.tag_id}'
+      WHERE post_id = ${body.post_id};
     `;
 
     let values: Post[] = [];

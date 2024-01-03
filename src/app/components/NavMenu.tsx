@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
+import style from "./NavMenu.module.css";
 
 function AuthButton() {
   const { data: session } = useSession();
@@ -8,7 +9,8 @@ function AuthButton() {
   if (session) {
     return (
       <>
-        <span>Welcome </span>{session?.user?.name} <br />
+        <span>Welcome </span>
+        {session?.user?.name} <br />
         <button onClick={() => signOut()}> Sign out</button>
       </>
     );
@@ -17,17 +19,13 @@ function AuthButton() {
 
 export default function NavMenu() {
   return (
-    <div>
-      <AuthButton />
-      <br />
-      <br />
+    <div className={style.navigation}>
+      <div>
+        <AuthButton />
+      </div>
       <Link href={"/dashboard"}>DASHBORD HOME</Link>
-      <br />
-      <br />
-      <Link href={"/dashboard/newPost"}>New Blog post</Link>
-      <br />
-      <br />
-      <Link href={"/dashboard/all-comments"}>All comments</Link>
+      <Link href={"/dashboard/newPost"}>NEW BLOG POST</Link>
+      <Link href={"/dashboard/all-comments"}>ALL COMMENTS</Link>
     </div>
-  )
+  );
 }

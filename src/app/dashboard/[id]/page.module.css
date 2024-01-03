@@ -1,10 +1,39 @@
+.main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #EAE8EB;
+}
+
 .img {
   max-width: 700px;
 }
 
+.allComments {
+  max-width: 1300px;
+  width: 100%;
+  
+}
+
 .commentWrapper {
-  border: solid 1px gray;
+  background-color: white;
+  border-top: 1px solid #b6b6b6;
   padding: 1rem;
+  border-radius: 1rem;
+  box-shadow: 3px 3px 15px #cacaca;
+  margin-top: 1rem;
+}
+
+.commentAuthor {
+  border-bottom: 1px solid rgb(192, 192, 192);
+  padding-bottom: 6px;
+  color: rgb(90, 90, 90);
+}
+
+.createdAt {
+  text-align: end;
+  color: #797979;
 }
 
 .editButton {

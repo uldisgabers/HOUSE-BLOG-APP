@@ -39,20 +39,37 @@ export default async function TagPage({params}: {params: { slug: string };}) {
   const tags = await getTags();
 
   return (
-    <main>
-      <div>
+    <main className={style.main}>
+      <div className={style.sectionWrapper}>
         {posts.map((post: Post) => (
           <div key={post.post_id} className={style.blogSection}>
-            <img className={style.image} src={post.img} alt="blog-post-pic" />
-            <Link className={style.title} href={`/${post.post_id}`}>{post.title}</Link>
-            <p>{post.content}</p>
-            <div>
-              created{" "}
-              {formatDistance(parseISO(post.createdAt), new Date(), {
-                addSuffix: true,
-              })}
+            <div className={style.pictureWrapper}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img className={style.image} src={post.img} alt="blog-post-pic" />
             </div>
-            
+            <Link className={style.title} href={`/${post.post_id}`}>
+              {post.title}
+            </Link>
+            <p>{post.content}</p>
+            <div className={style.postInfoDetails}>
+              <div>
+                {tags.map((tag: Tag) => {
+                  if (tag.tag_id === post.tag_id) {
+                    return (
+                      <Link key={tag.tag_id} href={`/tag/${tag.tag_id}`} className={style.tag}>
+                        {tag.tag_name}
+                      </Link>
+                    );
+                  }
+                })}
+              </div>
+              <div className="card__timestamp">
+                created{" "}
+                {formatDistance(parseISO(post.createdAt), new Date(), {
+                  addSuffix: true,
+                })}
+              </div>
+            </div>
           </div>
         ))}
       </div>

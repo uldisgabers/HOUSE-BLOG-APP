@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import style from "./CommentForm.module.css"
 // import { Comment } from "@/app/api/comments/[id]/route";
 
 type CommentsPropType = {
@@ -42,9 +43,10 @@ export default function CommentForm({ post_id }: CommentsPropType) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className={style.formWrapper} onSubmit={handleSubmit}>
       <input
         type="text"
+        className={style.author}
         placeholder="Author..."
         required
         value={newComment.author}
@@ -52,16 +54,16 @@ export default function CommentForm({ post_id }: CommentsPropType) {
           setNewComment({ ...newComment, author: e.target.value })
         }
       />
-      <input
-        type="text"
+      <textarea
         placeholder="Your comment..."
         required
+        className={style.comment}
         value={newComment.comment}
         onChange={(e) =>
           setNewComment({ ...newComment, comment: e.target.value })
         }
       />
-      <button>SEND</button>
+      <button className={style.sendButton}>SEND</button>
     </form>
   );
 }

@@ -11,16 +11,26 @@
     "seed": "node seed-data.js"
   },
   "dependencies": {
+    "@types/draftjs-to-html": "^0.8.4",
+    "@types/html-to-draftjs": "^1.4.3",
+    "@types/react-draft-wysiwyg": "^1.13.8",
+    "akar-icons": "^1.9.30",
     "axios": "^1.6.3",
     "cors": "^2.8.5",
     "date-fns": "^3.0.6",
+    "draft-convert": "^2.1.13",
+    "draft-js": "^0.11.7",
+    "draftjs-to-html": "^0.9.1",
+    "html-to-draftjs": "^1.5.0",
     "mysql2": "^3.6.5",
     "next": "14.0.4",
     "next-auth": "^4.24.5",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-draft-wysiwyg": "^1.15.0"
   },
   "devDependencies": {
+    "@types/draft-convert": "^2.1.8",
     "@types/express": "^4.17.21",
     "@types/node": "^20",
     "@types/react": "^18",

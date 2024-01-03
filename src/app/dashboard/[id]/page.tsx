@@ -57,28 +57,19 @@ export default async function PostDetails({
   const apiComments: Comment[] = await getComments(params.id);
 
   return (
-    <main>
+    <main className={style.main}>
       <PostInfo post={post}/>
-      {/* <div>
-        eslint-disable-next-line @next/next/no-img-element
-        <img className={style.img} src={post.img} alt="blog title photo" />
-        <h3>{post.title}</h3>
-        <p>{post.content}</p>
-        <Link href={`/tag/${post.tag_id}`}>See more post like this</Link>
-      </div> */}
-      {/* <DeletePost post_id={post.post_id}/>
-      <button className={style.editButton}>EDIT POST</button> */}
-      <div>
+      <div className={style.allComments}>
         <h2>Add new Comment</h2>
         <CommentForm post_id={post.post_id} />
       </div>
-      <div>
+      <div className={style.allComments}>
         {apiComments.map((comment) => {
           return (
             <div className={style.commentWrapper} key={comment.comment_id}>
-              <h4>{comment.author}</h4>
+              <h4 className={style.commentAuthor}>{comment.author}</h4>
               <p>{comment.comment}</p>
-              <div>
+              <div className={style.createdAt}>
                 created{" "}
                 {formatDistance(parseISO(comment.createdAt), new Date(), {
                   addSuffix: true,
