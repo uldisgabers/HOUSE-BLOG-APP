@@ -3,7 +3,7 @@ import { formatDistance, parseISO } from "date-fns";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import React from "react";
-import style from "./page.module.css"
+import style from "./page.module.css";
 import Link from "next/link";
 import DeleteComment from "@/app/components/DeleteComment/DeleteComment";
 
@@ -42,9 +42,9 @@ export default async function AllComments() {
             })}
           </div>
           <Link href={`/dashboard/${comment.post_id}`}>Source post</Link>
-            <br />
-            <br />
-          <DeleteComment comment_id={comment.comment_id}/>
+          <br />
+          <br />
+          <DeleteComment comment_id={comment.comment_id} />
         </div>
       ))}
     </main>

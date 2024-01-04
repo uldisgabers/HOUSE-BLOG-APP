@@ -1,9 +1,5 @@
-// "use client"
 import style from "./page.module.css";
-import axios from "axios";
-import { ReactNode } from "react";
 import { formatDistance, parseISO } from "date-fns";
-import Image from "next/image";
 import Link from "next/link";
 import { Tag, Post } from "./types";
 
@@ -56,8 +52,10 @@ export default async function Home() {
             <Link className={style.title} href={`/${post.post_id}`}>
               {post.title}
             </Link>
-            <div className={style.paragraph} dangerouslySetInnerHTML={{__html: post.content}}></div>
-            {/* <>{post.content}</> */}
+            <div
+              className={style.paragraph}
+              dangerouslySetInnerHTML={{ __html: post.content }}
+            ></div>
             <div className={style.postInfoDetails}>
               <div>
                 {tags.map((tag: Tag) => {

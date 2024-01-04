@@ -1,7 +1,5 @@
-import { NextApiResponse } from "next";
 import { NextResponse, NextRequest } from "next/server";
 import { connectionToDB } from "../../../db";
-import { error } from "console";
 import mysql from "mysql2/promise";
 
 type Post = {
@@ -12,26 +10,19 @@ type Post = {
   createdAt: string;
 };
 
-// define and export the GET handler function
 export async function GET(request: Request) {
   try {
-    // 2. connect to database
+
     const connection = await mysql.createConnection(connectionToDB);
 
-    // 3. create a query to fetch data
-    let get_exp_query = "";
-    get_exp_query = "SELECT * FROM posts";
+    let get_exp_query = "SELECT * FROM posts";
 
-    // we can use this array to pass parameters to the SQL query
     let values: Post[] = [];
 
-    // 4. exec the query and retrieve the results
     const [results] = await connection.execute(get_exp_query, values);
 
-    // 5. close the connection when done
     connection.end();
 
-    // return the results as a JSON API response
     return NextResponse.json(results);
   } catch (err) {
     console.log("ERROR: API - ", (err as Error).message);
@@ -87,22 +78,19 @@ export async function DELETE(request: Request) {
 
     const body = await request.json();
 
-    let deleteCommentsQuery = `
+    const deleteCommentsQuery = `
       DELETE FROM comments 
-      WHERE post_id='${body}';
+      WHERE post_id = ?
     `;
 
-    let deletePostQuery = `
+    const deletePostQuery = `
       DELETE FROM posts 
-      WHERE post_id='${body}';
+      WHERE post_id = ?
     `;
 
-    let values: Post[] = [];
+    let values = [body];
 
-    const [commentsResults] = await connection.execute(
-      deleteCommentsQuery,
-      values
-    );
+    const [commentsResults] = await connection.execute(deleteCommentsQuery, values);
 
     const [postResults] = await connection.execute(deletePostQuery, values);
 
@@ -127,14 +115,13 @@ export async function PUT(request: Request) {
 
     const body = await request.json();
 
-    let get_exp_query = "";
-    get_exp_query = `
+    let get_exp_query = `
       UPDATE posts
-      SET title = '${body.title}', img = '${body.img}', content = '${body.content}', tag_id = '${body.tag_id}'
-      WHERE post_id = ${body.post_id};
+      SET title = ?, img = ?, content = ?, tag_id = ?
+      WHERE post_id = ?
     `;
 
-    let values: Post[] = [];
+    const values = [body.title, body.img, body.content, body.tag_id, body.post_id];
 
     const [results] = await connection.execute(get_exp_query, values);
 

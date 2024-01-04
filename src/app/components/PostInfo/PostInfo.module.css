@@ -4,7 +4,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #EAE8EB;
+  background-color: #eae8eb;
+  padding: 1rem;
 }
 
 .editButton {
@@ -32,10 +33,10 @@
 
 .sectionWrapper {
   width: 100%;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   display: flex;
   flex-direction: column;
-
+  padding: 1rem;
 }
 
 .title {
@@ -46,6 +47,7 @@
 
 .paragraph {
   font-size: 18px;
+  margin-bottom: 1rem;
 }
 
 .img {
@@ -55,6 +57,7 @@
 .createdAt {
   text-align: end;
   color: #797979;
+  margin-top: 1rem;
 }
 
 .wrapperClass {

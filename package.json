@@ -11,8 +11,9 @@
     "seed": "node seed-data.js"
   },
   "dependencies": {
+    "@types/draft-js": "^0.11.17",
     "@types/draftjs-to-html": "^0.8.4",
-    "@types/html-to-draftjs": "^1.4.3",
+    "@types/html-to-draftjs": "^1.4.0",
     "@types/react-draft-wysiwyg": "^1.13.8",
     "akar-icons": "^1.9.30",
     "axios": "^1.6.3",
@@ -21,13 +22,13 @@
     "draft-convert": "^2.1.13",
     "draft-js": "^0.11.7",
     "draftjs-to-html": "^0.9.1",
-    "html-to-draftjs": "^1.5.0",
+    "html-to-draftjs": "^1.4.0",
     "mysql2": "^3.6.5",
     "next": "14.0.4",
     "next-auth": "^4.24.5",
     "react": "^18",
     "react-dom": "^18",
-    "react-draft-wysiwyg": "^1.15.0"
+    "react-draft-wysiwyg": "^1.14.0"
   },
   "devDependencies": {
     "@types/draft-convert": "^2.1.8",
@@ -38,6 +39,7 @@
     "eslint": "^8",
     "eslint-config-next": "14.0.4",
     "express": "^4.18.2",
+    "immutable": "^3.8.2",
     "nodemon": "^3.0.2",
     "ts-node": "^10.9.1",
     "typescript": "^5"

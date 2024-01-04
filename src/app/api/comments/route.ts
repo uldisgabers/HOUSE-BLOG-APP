@@ -18,13 +18,12 @@ export async function POST(request: Request) {
 
     const body = await request.json();
 
-    let get_exp_query = "";
-    get_exp_query = `
+    let get_exp_query = `
       INSERT INTO comments (author, comment, createdAt, post_id) 
-      VALUES ("${body.author}", "${body.comment}", "${body.createdAt}", "${body.post_id}")
+      VALUES (?, ?, ?, ?)
     `;
 
-    let values: Comment[] = [];
+    let values = [body.author, body.comment, body.createdAt, body.post_id];
 
     const [results] = await connection.execute(get_exp_query, values);
 
@@ -47,8 +46,7 @@ export async function GET(request: Request) {
   try {
     const connection = await mysql.createConnection(connectionToDB);
 
-    let get_exp_query = "";
-    get_exp_query = `SELECT * FROM comments`;
+    let get_exp_query = `SELECT * FROM comments`;
 
     let values: Comment[] = [];
 

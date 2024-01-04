@@ -1,18 +1,18 @@
-'use client'
+"use client";
 
-import React, { useState } from 'react'
-import style from "./AddTagForm.module.css"
-import router, { useRouter } from 'next/navigation'
+import React, { useState } from "react";
+import style from "./AddTagForm.module.css";
+import { useRouter } from "next/navigation";
 
 function AddTagForm() {
   const router = useRouter();
-  
-  const [newTag, setNewTag] = useState("")
+
+  const [newTag, setNewTag] = useState("");
 
   const handleSubmit = async () => {
     const res = await fetch("http://localhost:3000/api/tags", {
       method: "POST",
-      headers: { "Content-Type": "aplication/json" },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newTag),
     });
 
@@ -20,8 +20,8 @@ function AddTagForm() {
       router.refresh();
     }
 
-    setNewTag("")
-  }
+    setNewTag("");
+  };
 
   return (
     <div>
@@ -30,16 +30,16 @@ function AddTagForm() {
         <input
           type="text"
           className={style.input}
-          placeholder='New tag name...'
+          placeholder="New tag name..."
           value={newTag}
           onChange={(e) => {
-            setNewTag(e.target.value)
+            setNewTag(e.target.value);
           }}
         />
         <button className={style.button}>ADD</button>
       </form>
     </div>
-  )
+  );
 }
 
-export default AddTagForm
+export default AddTagForm;

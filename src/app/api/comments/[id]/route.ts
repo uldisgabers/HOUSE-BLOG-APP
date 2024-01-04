@@ -14,10 +14,8 @@ export async function GET(
   try {
     const connection = await mysql.createConnection(connectionToDB);
 
-    let get_exp_query = "";
-    get_exp_query = `SELECT * FROM comments WHERE post_id = ${params.id}`;
-
-    let values: Comment[] = [];
+    let get_exp_query = `SELECT * FROM comments WHERE post_id = ?`;
+    let values = [params.id];
 
     const [results] = await connection.execute(get_exp_query, values);
 
@@ -43,13 +41,12 @@ export async function DELETE(
   try {
     const connection = await mysql.createConnection(connectionToDB);
 
-    let get_exp_query = "";
-    get_exp_query = `
+    let get_exp_query = `
       DELETE FROM comments 
-      WHERE comment_id='${params.id}'
+      WHERE comment_id = ?
     `;
 
-    let values: Comment[] = [];
+    let values = [params.id];
 
     const [results] = await connection.execute(get_exp_query, values);
 

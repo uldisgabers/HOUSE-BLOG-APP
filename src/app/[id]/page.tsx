@@ -1,10 +1,9 @@
-import { Post, Tag } from "../types";
+import { Post } from "../types";
 import style from "./page.module.css";
 import { Comment } from "../types";
 import CommentForm from "../components/CommentForm/CommentForm";
 import { formatDistance, parseISO } from "date-fns";
 import Link from "next/link";
-import Image from "next/image";
 
 async function getPost(id: number) {
   const res = await fetch("http://localhost:3000/api/posts/" + id, {
@@ -55,8 +54,10 @@ export default async function PostDetails({
         <h3 className={style.title}>{post.title}</h3>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img className={style.img} src={post.img} alt="blog title photo" />
-        <div className={style.paragraph} dangerouslySetInnerHTML={{__html: post.content}}></div>
-        {/* <p className={style.paragraph}>{post.content}</p> */}
+        <div
+          className={style.paragraph}
+          dangerouslySetInnerHTML={{ __html: post.content }}
+        ></div>
         <div className={style.postInfoDetails}>
           <Link className={style.tag} href={`/tag/${post.tag_id}`}>
             See more post like this

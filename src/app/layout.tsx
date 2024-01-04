@@ -6,7 +6,6 @@ import { getServerSession } from "next-auth";
 import SessionProvider from "./components/SessionProvider";
 import React from "react";
 import { HomeAlt1 } from "akar-icons";
-import { useRouter } from "next/navigation";
 
 const roboto = Roboto({ subsets: ["latin"], weight: "400", display: "swap" });
 
@@ -28,13 +27,12 @@ export default async function RootLayout({
         <SessionProvider session={session}>
           <main>
             <div className="navigation">
-
-            <Link className="homeIcon" href={"/"}>
-              <HomeAlt1 strokeWidth={2} size={36} color="black" />
-            </Link>
-            <Link className="homeBtn" href={"/"}>
-              HOUSE BLOG
-            </Link>
+              <Link className="homeIcon" href={"/"}>
+                <HomeAlt1 strokeWidth={2} size={36} color="black" />
+              </Link>
+              <Link className="homeBtn" href={"/"}>
+                HOUSE BLOG
+              </Link>
             </div>
             {children}
           </main>

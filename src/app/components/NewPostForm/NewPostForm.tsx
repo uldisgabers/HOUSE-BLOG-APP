@@ -1,17 +1,20 @@
 "use client";
 
-import { Post, Tag } from "@/app/types";
-import React, { useEffect, useState, Component } from "react";
+import { Tag } from "@/app/types";
+import React, { useEffect, useState } from "react";
 import style from "./NewPostForm.module.css";
 import { useRouter } from "next/navigation";
-import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import '/node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import { EditorState, convertToRaw } from 'draft-js';
-import { convertToHTML } from 'draft-convert';
-import draftToHtml from 'draftjs-to-html';
-import htmlToDraft from 'html-to-draftjs';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import "/node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import { EditorState, convertToRaw } from "draft-js";
+import draftToHtml from "draftjs-to-html";
+import dynamic from "next/dynamic";
+import { EditorProps } from "react-draft-wysiwyg";
+
+const Editor = dynamic<EditorProps>(
+  () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
+  { ssr: false }
+);
 
 export default function NewPostForm() {
   const router = useRouter();
@@ -72,30 +75,27 @@ export default function NewPostForm() {
       tag_id: "",
     });
 
-    setEditorState(() => EditorState.createEmpty())
+    setEditorState(() => EditorState.createEmpty());
   };
 
   // Wisiwyg setup --------------------------------------------------------
 
-  const [editorState, setEditorState] = useState(
-    () => EditorState.createEmpty(),
+  const [editorState, setEditorState] = useState(() =>
+    EditorState.createEmpty()
   );
-  const [convertedContent, setConvertedContent] = useState('');
-
-  
 
   const onEditorStateChange = (editorState: EditorState) => {
-    setEditorState(editorState)
-    setNewPost({...newPost, content: draftToHtml(convertToRaw(editorState.getCurrentContent()))})
-  }
-
+    setEditorState(editorState);
+    setNewPost({
+      ...newPost,
+      content: draftToHtml(convertToRaw(editorState.getCurrentContent())),
+    });
+  };
 
   // ----------------------------------------------------------------------
 
   if (tags.length === 0) {
-    return (
-      <h1>Loading...</h1>
-    )
+    return <h1>Loading...</h1>;
   }
 
   return (
@@ -141,22 +141,7 @@ export default function NewPostForm() {
           wrapperClassName={style.wrapperClass}
           editorClassName={style.editorClass}
           toolbarClassName={style.toolbarClass}
-
         />
-
-        {/* <input
-          required
-          id="description"
-          type="text"
-          placeholder="Blog content..."
-          value={newPost.content}
-          onChange={(e) => {
-            setNewPost({
-              ...newPost,
-              content: e.target.value,
-            });
-          }}
-        /> */}
 
         <label htmlFor="tag">Tag</label>
         <select

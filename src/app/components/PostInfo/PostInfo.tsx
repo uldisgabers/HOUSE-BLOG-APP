@@ -7,16 +7,17 @@ import { Post, Tag } from "@/app/types";
 import DeletePost from "../DeletePost/DeletePost";
 import { useRouter } from "next/navigation";
 import { formatDistance, parseISO } from "date-fns";
-import { Editor } from "react-draft-wysiwyg";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import "/node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { EditorState, convertToRaw, ContentState } from "draft-js";
-import { convertToHTML } from "draft-convert";
 import draftToHtml from "draftjs-to-html";
-import htmlToDraft from "html-to-draftjs";
+import dynamic from "next/dynamic";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
-
+const Editor = dynamic(
+  () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
+  { ssr: false }
+);
+const htmlToDraft =
+  typeof window === "object" && require("html-to-draftjs").default;
 
 type PostPropType = {
   post: Post;
@@ -50,6 +51,31 @@ function PostInfo({ post }: PostPropType) {
     fetchTags();
   }, []);
 
+  const [editorState, setEditorState] = useState(() =>
+    EditorState.createEmpty()
+  );
+
+  useEffect(() => {
+    const loadHtmlToDraft = async () => {
+      try {
+        const contentBlock = htmlToDraft(post.content);
+
+        if (contentBlock) {
+          const contentState = ContentState.createFromBlockArray(
+            contentBlock.contentBlocks
+          );
+          const initialEditorState =
+            EditorState.createWithContent(contentState);
+          setEditorState(initialEditorState);
+        }
+      } catch (error) {
+        console.error("Error loading html-to-draftjs:", error);
+      }
+    };
+
+    loadHtmlToDraft();
+  }, [post.content]);
+
   const [editMode, setEditMode] = useState(false);
 
   const [editedPost, setEditedPost] = useState(post);
@@ -68,38 +94,7 @@ function PostInfo({ post }: PostPropType) {
     setEditMode(false);
   };
 
-  const [editorState, setEditorState] = useState(() =>
-    EditorState.createEmpty()
-  );
-
-  useEffect(() => {
-    // Check if window is defined before accessing it
-    if (typeof window !== "undefined") {
-      const contentBlock = htmlToDraft(post.content);
-      if (contentBlock) {
-        const contentState = ContentState.createFromBlockArray(
-          contentBlock.contentBlocks
-        );
-        const initialEditorState = EditorState.createWithContent(contentState);
-        setEditorState(initialEditorState);
-      }
-    }
-  }, [post.content]);
-
-  useEffect(() => {
-    // Convert HTML to Draft.js content on mount
-    const contentBlock = htmlToDraft(post.content);
-    if (contentBlock) {
-      const contentState = ContentState.createFromBlockArray(
-        contentBlock.contentBlocks
-      );
-      const initialEditorState = EditorState.createWithContent(contentState);
-      setEditorState(initialEditorState);
-    }
-  }, []); // Empty dependency array ensures this effect runs only once on mount
-
   const onEditorStateChange = (editorState: EditorState) => {
-    // Update editor state and set the content in the editedPost
     setEditorState(editorState);
     setEditedPost({
       ...editedPost,
@@ -118,7 +113,6 @@ function PostInfo({ post }: PostPropType) {
             className={style.paragraph}
             dangerouslySetInnerHTML={{ __html: post.content }}
           ></div>
-          {/* <p className={style.paragraph}>{post.content}</p> */}
           <Link className={style.tag} href={`/tag/${post.tag_id}`}>
             See more post like this
           </Link>

@@ -1,14 +1,10 @@
-import { Post, Tag } from "../../types";
+import { Post } from "../../types";
 import style from "./page.module.css";
 import { Comment } from "../../types";
 import CommentForm from "../../components/CommentForm/CommentForm";
 import { formatDistance, parseISO } from "date-fns";
-import Link from "next/link";
 import DeleteComment from "@/app/components/DeleteComment/DeleteComment";
-import DeletePost from "@/app/components/DeletePost/DeletePost";
 import { getServerSession } from "next-auth";
-// import { redirect } from "next/navigation";
-import { useState } from "react";
 import PostInfo from "@/app/components/PostInfo/PostInfo";
 
 const { redirect } = require("next/navigation");
@@ -58,7 +54,7 @@ export default async function PostDetails({
 
   return (
     <main className={style.main}>
-      <PostInfo post={post}/>
+      <PostInfo post={post} />
       <div className={style.allComments}>
         <h2>Add new Comment</h2>
         <CommentForm post_id={post.post_id} />
@@ -75,7 +71,7 @@ export default async function PostDetails({
                   addSuffix: true,
                 })}
               </div>
-              <DeleteComment comment_id={comment.comment_id}/>
+              <DeleteComment comment_id={comment.comment_id} />
             </div>
           );
         })}

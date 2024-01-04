@@ -7,8 +7,7 @@ export async function GET(request: Request) {
   try {
     const connection = await mysql.createConnection(connectionToDB);
 
-    let get_exp_query = "";
-    get_exp_query = "SELECT * FROM tags";
+    let get_exp_query = "SELECT * FROM tags";
 
     let values: Tag[] = [];
 
@@ -35,13 +34,12 @@ export async function POST(request: Request) {
 
     const body = await request.json();
 
-    let get_exp_query = "";
-    get_exp_query = `
+    let get_exp_query = `
       INSERT INTO tags (tag_name) 
-      VALUES ('${body}')
+      VALUES (?)
     `;
 
-    let values: Tag[] = [];
+    let values = [body];
 
     const [results] = await connection.execute(get_exp_query, values);
 
@@ -66,13 +64,12 @@ export async function DELETE(request: Request) {
 
     const body = await request.json();
 
-    let get_exp_query = "";
-    get_exp_query = `
+    let get_exp_query = `
       DELETE FROM tags 
-      WHERE tag_id='${body}'
+      WHERE tag_id = ?
     `;
 
-    let values: Tag[] = [];
+    let values = [body];
 
     const [results] = await connection.execute(get_exp_query, values);
 

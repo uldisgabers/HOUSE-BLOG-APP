@@ -41,7 +41,6 @@ export const authOptions = {
             throw new Error('Invalid credentials');
           }
         } catch (error: unknown) {
-          // console.error(error.message);
           throw new Error('Failed to authenticate user');
         }
       }

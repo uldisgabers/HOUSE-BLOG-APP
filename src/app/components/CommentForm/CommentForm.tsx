@@ -2,8 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import style from "./CommentForm.module.css"
-// import { Comment } from "@/app/api/comments/[id]/route";
+import style from "./CommentForm.module.css";
 
 type CommentsPropType = {
   post_id: number;
@@ -19,7 +18,7 @@ export default function CommentForm({ post_id }: CommentsPropType) {
     post_id: post_id,
   });
 
-  const handleSubmit = async (e: { preventDefault: () => void; }) => {
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
     setNewComment({ ...newComment, createdAt: new Date() });

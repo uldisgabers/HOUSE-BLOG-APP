@@ -3,12 +3,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #EAE8EB;
+  background-color: #eae8eb;
 }
 
 .sectionWrapper {
   max-width: 1300px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -19,7 +19,7 @@
   padding: 1rem;
   display: flex;
   flex-direction: column;
-  background-color: #FAF3EB;
+  background-color: #faf3eb;
   box-shadow: 10px 10px 8px #dddddd;
 }
 
@@ -56,8 +56,8 @@
   text-decoration: none;
   font-size: 20px;
   font-weight: bold;
-  border: 3px solid #80ADBC;
-  color: #80ADBC;
+  border: 3px solid #80adbc;
+  color: #80adbc;
   padding: 0.5rem;
   border-radius: 2rem;
   transition: 0.5s;
@@ -65,5 +65,5 @@
 
 .tag:hover {
   color: white;
-  background-color: #80ADBC;
+  background-color: #80adbc;
 }

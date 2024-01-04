@@ -1,8 +1,6 @@
-import NavMenu from "../components/NavMenu"
+import NavMenu from "../components/NavMenu";
 
-export default function Layout({children,}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <main>
@@ -10,5 +8,5 @@ export default function Layout({children,}: {
         {children}
       </main>
     </>
-  )
+  );
 }
