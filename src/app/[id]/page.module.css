@@ -8,6 +8,7 @@
 
 .sectionWrapper {
   max-width: 1300px;
+  width: 100%;
   background-color: #FFFFFF;
   display: flex;
   flex-direction: column;
@@ -22,6 +23,7 @@
 
 .paragraph {
   font-size: 18px;
+  margin-top: 1rem;
 }
 
 .img {

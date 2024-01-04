@@ -50,7 +50,7 @@ export default async function TagPage({params}: {params: { slug: string };}) {
             <Link className={style.title} href={`/${post.post_id}`}>
               {post.title}
             </Link>
-            <p>{post.content}</p>
+            <div className={style.paragraph} dangerouslySetInnerHTML={{__html: post.content}}></div>
             <div className={style.postInfoDetails}>
               <div>
                 {tags.map((tag: Tag) => {

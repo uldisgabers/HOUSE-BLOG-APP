@@ -14,10 +14,10 @@ export default async function NewPost() {
   }
 
   return (
-    <>
+    <main className={style.main}>
       <NewPostForm />
       <AddTagForm />
       <DeleteTag />
-    </>
+    </main>
   );
 }

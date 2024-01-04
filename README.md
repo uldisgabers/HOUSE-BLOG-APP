@@ -1,36 +1,106 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Blog homework
+MD-18 Homework. Made using NextJS and MySQL database on a local Docker container.
 
-## Getting Started
+## Prerequisites
 
-First, run the development server:
+Before you begin, ensure you have the following installed on your machine:
+
+- [Docker](https://www.docker.com/)
+- [Node.js](https://nodejs.org/)
+- [npm](https://www.npmjs.com/get-npm)
+
+## Setup
+
+Open Docker - leave it in the background
+
+Then in your code editor, execute these commands
+
+Install project dependencies locally.
+
+```bash
+npm install
+```
+
+Build and run the Docker containers.
+
+```bash
+docker-compose up --build
+```
+
+Seed data is required to populate the database with initial information. Run the following command to seed the database:
+
+```bash
+npm run seed
+```
+
+## Usage
+
+To start the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000/`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Admin Dashboard
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+To access the admin dashbord, use `http://localhost:3000/dashboard`. You will be asked to input valid credentials.
 
-## Learn More
+Default credentials are
 
-To learn more about Next.js, take a look at the following resources:
+`username = admin`
+`password = admin`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+There you can post, edit and delete blog posts, as well as manage comments.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## DB Datascheme
+Database consists of 4 tables `posts` `comments` `tags` and `users`
 
-## Deploy on Vercel
+#### `posts` table
+```
+  post_id: number;
+  title: string;
+  img: string;
+  content: string;
+  createdAt: string;
+  tag_id: number
+```
+#### `tags` table
+```
+  tag_id: number;
+  tag_name: string;
+```
+#### `comments` table
+```
+  comment_id: number;
+  author: string;
+  comment: string;
+  createdAt: string;
+  post_id: number;
+```
+#### `users` table
+```
+  user_id: number;
+  username: string;
+  password: string;
+  name: string;
+  email: string;
+```
+Table contents with the names `tag_id` and  `post_id` are tied with foreign key between tables
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## API Endpoints
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+To access all posts `http://localhost:3000/api/posts/`
+
+To access single post `http://localhost:3000/api/posts/:id`
+
+To access all tags`http://localhost:3000/api/tags/`
+
+To access single tag`http://localhost:3000/api/tags/:id`
+
+To access all comments`http://localhost:3000/api/comments/`
+
+To access single comment`http://localhost:3000/api/comments/:id`
+
+To access single user by username `http://localhost:3000/api/users/[slug]`

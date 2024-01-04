@@ -92,7 +92,7 @@ connection.connect((err) => {
         CREATE TABLE IF NOT EXISTS posts (
           post_id INT AUTO_INCREMENT PRIMARY KEY,
           title VARCHAR(255) NOT NULL,
-          img VARCHAR(255) NOT NULL,
+          img TEXT NOT NULL,
           content TEXT NOT NULL,
           createdAt VARCHAR(255) NOT NULL,
           tag_id INT,
@@ -173,6 +173,51 @@ connection.connect((err) => {
             // Execute the query to insert data
             connection.query(
               insertDataQueryComments,
+              (insertDataError, insertDataResults) => {
+                if (insertDataError) {
+                  console.error("Error inserting data:", insertDataError);
+                } else {
+                  console.log("Data inserted or already exists");
+                }
+
+                // Close the connection
+                connection.end();
+              }
+            );
+          }
+        );
+
+        // Define the SQL query to create a table if not exists
+        const createTableQueryUsers = `
+        CREATE TABLE IF NOT EXISTS users (
+          user_id INT AUTO_INCREMENT PRIMARY KEY,
+          username VARCHAR(255) NOT NULL,
+          password VARCHAR(255) NOT NULL,
+          name VARCHAR(255) NOT NULL,
+          email VARCHAR(255) NOT NULL
+        )`;
+
+        // Execute the query to create the "users" table
+        connection.query(
+          createTableQueryUsers,
+          (createUsersError, createUsersResults) => {
+            if (createUsersError) {
+              console.error("Error creating table:", createUsersError);
+              connection.end();
+              return;
+            }
+
+            console.log('Table "users" created or already exists');
+
+            // Define the SQL query to insert data into the table
+            const insertDataQueryUsers = `
+            INSERT INTO users (username, password, name, email) VALUES
+              ('admin', 'admin','Admin', 'admin@admin.com')
+            `;
+
+            // Execute the query to insert data
+            connection.query(
+              insertDataQueryUsers,
               (insertDataError, insertDataResults) => {
                 if (insertDataError) {
                   console.error("Error inserting data:", insertDataError);

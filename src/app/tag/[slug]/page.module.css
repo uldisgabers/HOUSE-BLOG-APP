@@ -23,6 +23,11 @@
   box-shadow: 10px 10px 8px #dddddd;
 }
 
+.paragraph {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
 .title {
   margin-top: 1rem;
   color: black;

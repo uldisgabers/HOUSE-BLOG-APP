@@ -56,7 +56,7 @@ export default function NewPostForm() {
 
     const res = await fetch("http://localhost:3000/api/posts", {
       method: "POST",
-      headers: { "Content-Type": "aplication/json" },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newPost),
     });
 
@@ -82,13 +82,9 @@ export default function NewPostForm() {
   );
   const [convertedContent, setConvertedContent] = useState('');
 
-  useEffect(() => {
-    let html = draftToHtml(convertToRaw(editorState.getCurrentContent()));
-    setConvertedContent(html);
-  }, [editorState]);
+  
 
   const onEditorStateChange = (editorState: EditorState) => {
-    // setNewPost({...newPost, content: draftToHtml(convertToRaw(editorState.getCurrentContent()))})
     setEditorState(editorState)
     setNewPost({...newPost, content: draftToHtml(convertToRaw(editorState.getCurrentContent()))})
   }
@@ -108,6 +104,7 @@ export default function NewPostForm() {
         <label htmlFor="title">Title</label>
         <input
           required
+          className={style.title}
           id="title"
           type="text"
           placeholder="Blog title"
@@ -123,6 +120,7 @@ export default function NewPostForm() {
         <label htmlFor="img">Image URL</label>
         <input
           required
+          className={style.image}
           id="img"
           type="text"
           placeholder="Blog image URL"
@@ -163,6 +161,7 @@ export default function NewPostForm() {
         <label htmlFor="tag">Tag</label>
         <select
           id="tag"
+          className={style.select}
           value={newPost.tag_id}
           onChange={(e) => {
             setNewPost({
@@ -181,13 +180,8 @@ export default function NewPostForm() {
           })}
         </select>
 
-        <button>Add blog</button>
+        <button className={style.button}>Add blog</button>
       </form>
     </div>
   );
 }
-
-// function convertToHTML(arg0: Draft.Model.ImmutableData.ContentState) {
-//   throw new Error("Function not implemented.");
-// }
-

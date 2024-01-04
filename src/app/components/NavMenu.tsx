@@ -10,7 +10,7 @@ function AuthButton() {
     return (
       <>
         <span>Welcome </span>
-        {session?.user?.name} <br />
+        {session?.user?.email} <br />
         <button onClick={() => signOut()}> Sign out</button>
       </>
     );

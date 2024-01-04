@@ -60,8 +60,7 @@ function DeleteTag() {
     <div className={style.formWrapper}>
       <h3>Delete a tag</h3>
       <form onSubmit={handleDeleteTag}>
-        <label htmlFor="tag">Tag</label>
-        <select id="tag" value={deleteTag} onChange={(e) => {
+        <select className={style.select} id="tag" value={deleteTag} onChange={(e) => {
           setDeleteTag(e.target.value)
         }}>
           <option hidden>Select tag...</option>
@@ -73,7 +72,7 @@ function DeleteTag() {
             );
           })}
         </select>
-        <button>Delete Tag</button>
+        <button className={style.button}>Delete Tag</button>
       </form>
     </div>
   );

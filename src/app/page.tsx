@@ -13,8 +13,6 @@ async function getPosts() {
       revalidate: 0,
     },
   });
-  // The return value is *not* serialized
-  // You can return Date, Map, Set, etc.
 
   if (!res.ok) {
     throw new Error("Failed to fetch data");
@@ -29,11 +27,8 @@ async function getTags() {
       revalidate: 0, // Janoskatas NetNinja Next.JS #8 tutorial un javeic izmainas beigas
     },
   });
-  // The return value is *not* serialized
-  // You can return Date, Map, Set, etc.
 
   if (!res.ok) {
-    // This will activate the closest `error.js` Error Boundary
     throw new Error("Failed to fetch data");
   }
 
@@ -61,7 +56,7 @@ export default async function Home() {
             <Link className={style.title} href={`/${post.post_id}`}>
               {post.title}
             </Link>
-            <div dangerouslySetInnerHTML={{__html: post.content}}></div>
+            <div className={style.paragraph} dangerouslySetInnerHTML={{__html: post.content}}></div>
             {/* <>{post.content}</> */}
             <div className={style.postInfoDetails}>
               <div>

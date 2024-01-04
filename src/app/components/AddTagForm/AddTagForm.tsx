@@ -29,13 +29,14 @@ function AddTagForm() {
         <h3>Add new Tag</h3>
         <input
           type="text"
+          className={style.input}
           placeholder='New tag name...'
           value={newTag}
           onChange={(e) => {
             setNewTag(e.target.value)
           }}
         />
-        <button>ADD</button>
+        <button className={style.button}>ADD</button>
       </form>
     </div>
   )

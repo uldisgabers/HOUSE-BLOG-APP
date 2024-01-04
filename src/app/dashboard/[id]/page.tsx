@@ -7,11 +7,11 @@ import Link from "next/link";
 import DeleteComment from "@/app/components/DeleteComment/DeleteComment";
 import DeletePost from "@/app/components/DeletePost/DeletePost";
 import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
+// import { redirect } from "next/navigation";
 import { useState } from "react";
 import PostInfo from "@/app/components/PostInfo/PostInfo";
 
-
+const { redirect } = require("next/navigation");
 
 async function getPost(id: number) {
   const res = await fetch("http://localhost:3000/api/posts/" + id, {

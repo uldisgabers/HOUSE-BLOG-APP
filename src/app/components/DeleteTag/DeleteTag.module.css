@@ -1,5 +1,24 @@
 .formWrapper {
-  border: solid 1px black;
+  border: solid 1px rgb(180, 180, 180);
   padding: 1rem;
+  margin: 0 auto;
   margin-top: 1rem;
+  border-radius: 1rem;
+}
+
+.select {
+  padding: 0.5rem;
+  border-radius: 1rem;
+  margin-right: 1rem;
+}
+
+.button {
+  padding: 0.5rem;
+  border-radius: 1rem;
+  margin-right: 1rem;
+  background-color: red;
+  font-weight: bold;
+  color: white;
+  border: none;
+  cursor: pointer;
 }
