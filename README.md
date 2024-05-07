@@ -1,5 +1,5 @@
-# Blog homework
-MD-18 Homework. Made using NextJS and MySQL database on a local Docker container.
+# House Blog Page
+Made using NextJS and MySQL database on a local Docker container.
 
 ## Prerequisites
 
